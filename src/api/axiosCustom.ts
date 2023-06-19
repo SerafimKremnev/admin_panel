@@ -19,7 +19,7 @@ export const axiosServer = axios.create({
 })
 
 export const axiosClient = axios.create({
-  baseURL: VERCEL_URL ? `https://${VERCEL_URL}/proxy` : PROXY_BASE_API_URL,
+  baseURL: PROXY_BASE_API_URL,
   params: {
     token: TOKEN
   },
