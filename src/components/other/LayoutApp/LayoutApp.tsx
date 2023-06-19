@@ -1,46 +1,43 @@
 import React, {ReactNode} from 'react';
-import {Layout, Menu, MenuProps, theme} from 'antd';
-import Link from "next/link";
 import Logo from '/public/icons/logo.svg'
 import styles from './LayoutApp.module.css'
-
-import {
-  FieldTimeOutlined
-} from '@ant-design/icons';
-const { Content, Sider } = Layout;
-
+import {Icon} from "@mui/material";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import Link from "next/link";
 
 interface LayoutAppProps {
   children: ReactNode
 }
 
-const items: MenuProps['items'] = [
+const items = [
   {
-    icon:  React.createElement(FieldTimeOutlined),
-    label: (
-      <Link href="/">
-        Текущий трек
-      </Link>
-    ),
-    key: '1',
-  },
+    label: 'Текущий трек',
+    link: '/',
+    icon: <Icon><AccessTimeIcon/></Icon>
+  }
 ]
-
 
 const LayoutApp = ({children}: LayoutAppProps) => {
 
   return (
-    <Layout hasSider>
-      <Sider className={styles.sider}>
+    <div>
+      <div className={styles.sider}>
         <Logo viewBox="0 0 104 26" className={styles.logo}/>
-        <Menu className={styles.menu} theme="dark" mode="inline" items={items} />
-      </Sider>
-      <Layout className="site-layout" rootClassName={styles.layout}>
-        <Content className={styles.content} style={{ overflow: 'initial' }}>
-          {children}
-        </Content>
-      </Layout>
-    </Layout>
+        <nav className={styles.menu}>
+          <ul className={styles.list}>
+          {items.map(item =>
+            <li className={styles.itemMenu}>
+              <span>{item.icon}</span>
+              <Link href={item.link}>{item.label}</Link>
+            </li>
+          )}
+          </ul>
+        </nav>
+      </div>
+      <div className={styles.content}>
+        {children}
+      </div>
+    </div>
   );
 };
 
