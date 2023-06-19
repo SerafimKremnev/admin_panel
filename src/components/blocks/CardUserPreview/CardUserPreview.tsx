@@ -23,25 +23,28 @@ const CardUserPreview = ({timer}: CardUserPreviewProps) => {
     <Card className={styles.card} key={timer.timer.id}>
       <Typography fontSize={16} className={styles.user}>{timer.clickupUser.username}</Typography>
       <div className={styles.content}>
-        {'task' in  timer.timer ? <Breadcrumbs aria-label="breadcrumb">
-          <Typography
-            underline="hover"
-            color="inherit"
-          >
-            {timer.timer.task.location.folder.name}
-          </Typography>
-          <Typography color="text.primary">{timer.timer.task.location.list.name}</Typography>
-        </Breadcrumbs>
-        <div className={styles.link}>
-          <div className={styles.status} style={{backgroundColor: timer.timer.task.status.color}}></div>
-          <Link
-            className={styles.link}
-            target={'_blank'}
-            href={timer.timer.task.url}
-          >
-            {timer.timer.task.name}
-          </Link>
-        </div> : null}
+        {'task' in  timer.timer ?
+        <>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Typography
+              underline="hover"
+              color="inherit"
+            >
+              {timer.timer.task.location.folder.name}
+            </Typography>
+            <Typography color="text.primary">{timer.timer.task.location.list.name}</Typography>
+          </Breadcrumbs>
+          <div className={styles.link}>
+            <div className={styles.status} style={{backgroundColor: timer.timer.task.status.color}}></div>
+            <Link
+              className={styles.link}
+              target={'_blank'}
+              href={timer.timer.task.url}
+            >
+              {timer.timer.task.name}
+            </Link>
+          </div>
+        </> : null}
         <div className={styles.date}>{formattedDuration}</div>
       </div>
     </Card>
