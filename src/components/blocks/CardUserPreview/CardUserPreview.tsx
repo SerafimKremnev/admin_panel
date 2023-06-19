@@ -4,7 +4,7 @@ import {ITimers} from "../../../types/timers.interface";
 import { parseISO } from 'date-fns'
 import Link from "next/link";
 import styles from './CardUserPreview.module.css'
-import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
+import BreadcrumbItem from "antd/es/breadcrumb/BreadcrumbItem";
 
 interface CardUserPreviewProps {
   timer: ITimers
