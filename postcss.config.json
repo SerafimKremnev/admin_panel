@@ -1,0 +1,19 @@
+{
+  "plugins": [
+    "postcss-flexbugs-fixes",
+    "postcss-nesting",
+    "postcss-viewport-height-correction",
+    [
+      "postcss-preset-env",
+      {
+        "autoprefixer": {
+          "flexbox": "no-2009"
+        },
+        "stage": 2,
+        "features": {
+          "custom-properties": false
+        }
+      }
+    ]
+  ]
+}
