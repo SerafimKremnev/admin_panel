@@ -25,8 +25,8 @@ const LayoutApp = ({children}: LayoutAppProps) => {
         <Logo viewBox="0 0 104 26" className={styles.logo}/>
         <nav className={styles.menu}>
           <ul className={styles.list}>
-          {items.map(item =>
-            <li className={styles.itemMenu}>
+          {items.map((item, i) =>
+            <li key={i} className={styles.itemMenu}>
               <span>{item.icon}</span>
               <Link href={item.link}>{item.label}</Link>
             </li>
