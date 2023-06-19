@@ -23,7 +23,7 @@ const CardUserPreview = ({timer}: CardUserPreviewProps) => {
     <Card className={styles.card} key={timer.timer.id}>
       <Typography fontSize={16} className={styles.user}>{timer.clickupUser.username}</Typography>
       <div className={styles.content}>
-        <Breadcrumbs aria-label="breadcrumb">
+        {'location' in  timer.timer.task ? <Breadcrumbs aria-label="breadcrumb">
           <Typography
             underline="hover"
             color="inherit"
@@ -31,7 +31,7 @@ const CardUserPreview = ({timer}: CardUserPreviewProps) => {
             {timer.timer.task.location.folder.name}
           </Typography>
           <Typography color="text.primary">{timer.timer.task.location.list.name}</Typography>
-        </Breadcrumbs>
+        </Breadcrumbs> : null}
         <div className={styles.link}>
           <div className={styles.status} style={{backgroundColor: timer.timer.task.status.color}}></div>
           <Link
