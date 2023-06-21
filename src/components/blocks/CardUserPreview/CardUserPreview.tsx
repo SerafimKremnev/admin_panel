@@ -1,6 +1,6 @@
 import React from 'react';
 import {ITimers} from "../../../types/timers.interface";
-import { parseISO } from 'date-fns'
+import {format, parseISO} from 'date-fns'
 import Link from "next/link";
 import styles from './CardUserPreview.module.css'
 import {Breadcrumbs, Card, Typography} from "@mui/material";
@@ -20,7 +20,7 @@ const CardUserPreview = ({timer}: CardUserPreviewProps) => {
   const formattedDuration = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
 
   return (
-    <Card className={styles.card} key={timer.timer.id}>
+    <Card variant={'outlined'} className={styles.card} key={timer.timer.id}>
       <Typography fontSize={16} className={styles.user}>{timer.clickupUser.username}</Typography>
       <div className={styles.content}>
         {'task' in  timer.timer ?
@@ -44,8 +44,12 @@ const CardUserPreview = ({timer}: CardUserPreviewProps) => {
               {timer.timer.task.name}
             </Link>
           </div>
+          <div className={styles.statusName}>{timer.timer.task.status.status}</div>
         </> : null}
-        <div className={styles.date}>{formattedDuration}</div>
+        <div className={styles.date}>
+          <span>{formattedDuration}</span>
+          <span>{format(start, 'dd.MM HH:mm:ss')}</span>
+        </div>
       </div>
     </Card>
   );

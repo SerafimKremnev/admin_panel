@@ -19,11 +19,9 @@ function MyApp({ Component, pageProps, ...rest }: AppProps) {
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet"/>
       </Head>
       <div className={cn('page-layout')}>
-        <LayoutApp>
           <main className="main">
               <Component {...pageProps} />
           </main>
-        </LayoutApp>
       </div>
       <script async type="text/javascript" dangerouslySetInnerHTML={{
         __html: `const vh = window.innerHeight * 0.01;

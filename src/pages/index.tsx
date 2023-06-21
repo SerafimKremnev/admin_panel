@@ -8,33 +8,12 @@ import {ITimers} from "../types/timers.interface";
 import UserTimerList from "../components/blocks/UserTimerList/UserTimerList";
 
 
-export default function Home({timers}: PageProps) {
+export default function Home() {
   const data = useIntervalRequest<ITimers[]>()
 
   return (
     <>
-      <UserTimerList timers={data ? data : timers}/>
+      {data && <UserTimerList timers={data}/>}
     </>
   )
-}
-
-export const getStaticProps: GetStaticProps<PageProps> = async () => {
-  try {
-    const { data: timers } = await axiosServer.get<ITimers[]>(API.getTimers);
-
-    return {
-      props: {
-        timers
-      },
-    }
-  } catch (e) {
-    return {
-      notFound: true
-    }
-  }
-};
-
-
-interface PageProps {
-  timers: ITimers[]
 }

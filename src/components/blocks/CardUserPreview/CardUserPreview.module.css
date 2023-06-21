@@ -6,11 +6,15 @@
 }
 
 .card {
-
+    display: grid;
+    grid-template-rows: auto 1fr;
 }
 
 .date {
     color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
 }
 
 .status {
@@ -38,4 +42,9 @@
     padding: 1rem;
     display: grid;
     gap: 1rem;
+    grid-template-rows: auto 1fr auto auto;
+}
+
+.statusName {
+    color: rgba(0, 0, 0, 0.7);
 }
