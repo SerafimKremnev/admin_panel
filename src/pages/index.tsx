@@ -4,12 +4,12 @@ import useIntervalRequest from "../hooks/useIntervalRequest";
 import {GetStaticProps} from "next";
 import {API} from "../api/api";
 import {axiosServer} from "../api/axiosCustom";
-import {ITimers} from "../types/timers.interface";
 import UserTimerList from "../components/blocks/UserTimerList/UserTimerList";
+import {IUser} from "../types/timers.interface";
 
 
 export default function Home() {
-  const data = useIntervalRequest<ITimers[]>()
+  const data = useIntervalRequest<IUser[]>()
 
   return (
     <>
