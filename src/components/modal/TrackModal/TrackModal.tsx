@@ -20,9 +20,12 @@ const TrackModal = ({timersToday, name, open, onClose}: TrackModalProps) => {
       <div className={styles.timers}>
         {
           timersToday.slice(0, timersToday.length-1).map(timer =>
-            timer.task && <div className={styles.timer}>
+            timer.task &&
+            <div
+              key={timer.task.id}
+              className={styles.timer}
+            >
               <TaskName
-                key={timer.task.id}
                 href={timer.task.url}
                 name={timer.task.name}
                 status={timer.task.status}
