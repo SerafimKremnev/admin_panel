@@ -2,9 +2,7 @@ import type { AppProps } from 'next/app'
 import Head from "next/head";
 import '../styles/globals.css'
 import cn from 'classnames'
-
 import { useRemResize } from '../hooks/useRemResize';
-import LayoutApp from "../components/other/LayoutApp/LayoutApp";
 
 
 function MyApp({ Component, pageProps, ...rest }: AppProps) {
