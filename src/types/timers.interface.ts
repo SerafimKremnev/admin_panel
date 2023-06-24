@@ -1,24 +1,15 @@
-export interface ITimers {
+export interface IUser {
   telegramUser:     User;
-  timer:            Timer;
   timeSpentOnTask:  string;
   timeTrackedToday: string;
+  timersToday: TimersToday[];
   clickupUser:      User;
 }
+
 
 export interface User {
   id:       number;
   username: string;
-}
-
-export interface Timer {
-  end:         Date;
-  id:          string;
-  start:       Date;
-  duration:    string;
-  completed:   boolean;
-  description: string;
-  task:        Task;
 }
 
 export interface Task {
@@ -46,12 +37,15 @@ export interface Folder {
 export interface Status {
   status:     string;
   color:      string;
-  type:       Type;
   orderIndex: number;
 }
 
-export enum Type {
-  Custom = "custom",
-  Done = "done",
-  Open = "open",
+export interface TimersToday {
+  end:         Date | null;
+  task:        Task | null;
+  id:          string;
+  start:       Date;
+  duration:    string;
+  completed:   boolean;
+  description: string;
 }

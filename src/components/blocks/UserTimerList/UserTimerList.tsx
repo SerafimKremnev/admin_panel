@@ -1,41 +1,51 @@
 import React, {useEffect, useState} from 'react';
-import {ITimers} from "../../../types/timers.interface";
 import styles from './UserTimerList.module.css'
 import CardUserPreview from "../CardUserPreview/CardUserPreview";
-import {Skeleton} from "@mui/material";
+import {IUser} from "../../../types/timers.interface";
 
 interface UserTimerListProps {
-  timers: ITimers[]
+  users: IUser[]
 }
 
-const UserTimerList = ({timers}: UserTimerListProps) => {
-
-  const [timersNow, setTimerNow] = useState(timers)
-  const [timersSleep, setTimerSleep] = useState(timers)
+const UserTimerList = ({users}: UserTimerListProps) => {
+  const [userTrackNow, setUserTrackNow] = useState(users)
+  const [userSleep, setUserSleep] = useState(users)
 
   useEffect(() => {
-    const timeNow = []
-    const timeSleep = []
-    timers.forEach(timer => {
-      if(timer.timer.end) {
-        timeSleep.push(timer)
+    const trackNow = []
+    const trackSleep = []
+
+    users.forEach(timer => {
+      if(timer.timersToday[0].end) {
+        trackSleep.push(timer)
       } else {
-        timeNow.push(timer)
+        trackNow.push(timer)
       }
     })
-    setTimerNow(timeNow)
-    setTimerSleep(timeSleep)
-  }, [timers])
+
+    setUserTrackNow(trackNow)
+    setUserSleep(trackSleep)
+  }, [users])
 
   return (
-    <div  className={styles.content}>
+    <div>
       <h3 className={styles.subtitle}>Трекают сейчас:</h3>
       <div className={styles.root}>
-        {timersNow.length ? timersNow.map((timer) => <CardUserPreview key={timer.timer.id} timer={timer}/>) : <span className={styles.null}>Никого нет</span>}
+        {userTrackNow.length ? userTrackNow.map((user) =>
+          <CardUserPreview
+            user={user}
+            key={user.clickupUser.id}
+            currentTimer={user.timersToday[0]}
+          />) : <span className={styles.null}>Никого нет</span>}
       </div>
       <h3 className={styles.subtitle}>Последние треки:</h3>
       <div className={styles.root}>
-        {timersSleep.length ? timersSleep.map((timer) => <CardUserPreview key={timer.timer.id} timer={timer}/>) : <span className={styles.null}>Никого нет</span>}
+        {userSleep.length ? userSleep.map((user) =>
+          <CardUserPreview
+            user={user}
+            key={user.clickupUser.id}
+            currentTimer={user.timersToday[0]}
+          />) : <span className={styles.null}>Никого нет</span>}
       </div>
     </div>
   );

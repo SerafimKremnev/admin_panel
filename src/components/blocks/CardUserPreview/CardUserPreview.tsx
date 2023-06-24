@@ -1,57 +1,47 @@
-import React from 'react';
-import {ITimers} from "../../../types/timers.interface";
+import React, {useState} from 'react';
+import {IUser, Task, TimersToday} from "../../../types/timers.interface";
 import {format, parseISO} from 'date-fns'
 import Link from "next/link";
 import styles from './CardUserPreview.module.css'
-import {Breadcrumbs, Card, Typography} from "@mui/material";
+import {Breadcrumbs, Card, Modal, Typography} from "@mui/material";
+import {convertToTime} from "../../../utils/converIsoToTime";
+import Location from "../../elements/Location/Location";
+import TaskName from "../../elements/TaskName/TaskName";
+import {ru} from "date-fns/locale";
+import TrackModal from "../../modal/TrackModal/TrackModal";
 
 interface CardUserPreviewProps {
-  timer: ITimers
+  user: IUser
+  currentTimer: TimersToday
 }
-const CardUserPreview = ({timer}: CardUserPreviewProps) => {
-  const start = new Date(timer.timer.start)
-  const end = new Date(timer.timer.end ? timer.timer.end : Date.now())
-  const durationInMilliseconds = end.getTime() - start.getTime()
-  const durationInSeconds = durationInMilliseconds / 1000
-  const hours = Math.floor(durationInSeconds / 3600)
-  const minutes = Math.floor((durationInSeconds % 3600) / 60)
-  const seconds = Math.floor(durationInSeconds % 60)
-
-  const formattedDuration = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
-
+const CardUserPreview = ({user, currentTimer}: CardUserPreviewProps) => {
+  const start = new Date(currentTimer.start)
+  const task = currentTimer.task
+  const [openModal, setOpenModal] = useState(false)
   return (
-    <Card variant={'outlined'} className={styles.card} key={timer.timer.id}>
-      <Typography fontSize={16} className={styles.user}>{timer.clickupUser.username}</Typography>
-      <div className={styles.content}>
-        {'task' in  timer.timer ?
-        <>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Typography
-              underline="hover"
-              color="inherit"
-            >
-              {timer.timer.task.location.folder.name}
-            </Typography>
-            <Typography color="text.primary">{timer.timer.task.location.list.name}</Typography>
-          </Breadcrumbs>
-          <div className={styles.link}>
-            <div className={styles.status} style={{backgroundColor: timer.timer.task.status.color}}></div>
-            <Link
-              className={styles.link}
-              target={'_blank'}
-              href={timer.timer.task.url}
-            >
-              {timer.timer.task.name}
-            </Link>
-          </div>
-          <div className={styles.statusName}>{timer.timer.task.status.status}</div>
-        </> : null}
-        <div className={styles.date}>
-          <span>{formattedDuration}</span>
-          <span>{format(start, 'dd.MM HH:mm:ss')}</span>
+    task ? <>
+      <Card variant={'outlined'} className={styles.card}>
+        <div onClick={() => setOpenModal(true)} className={styles.user}>
+          <Typography fontSize={16}>{user.clickupUser.username}</Typography>
+          <Typography fontSize={16}>{convertToTime(user.timeTrackedToday)}</Typography>
         </div>
-      </div>
-    </Card>
+        <div className={styles.content}>
+          <Location location={task.location}/>
+          <TaskName currentTimeTrack={currentTimer.duration} status={task.status} name={task.name} href={task.url}/>
+          <div className={styles.date}>
+            <span>Начало - {format(start, 'dd MMMM HH:mm:ss', {locale: ru})}</span>
+            {task.timeEstimate && <span>Оценка - {convertToTime(task.timeEstimate)}</span>}
+            <span>Ушло времени на задачу - {convertToTime(user.timeSpentOnTask)}</span>
+          </div>
+        </div>
+      </Card>
+      <TrackModal
+        name={user.clickupUser.username}
+        timersToday={user.timersToday}
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+      />
+    </> : <></>
   );
 };
 

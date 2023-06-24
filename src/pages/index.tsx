@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <>
-      {data && <UserTimerList timers={data}/>}
+      {data && <UserTimerList users={data}/>}
     </>
   )
 }
