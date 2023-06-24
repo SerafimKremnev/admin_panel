@@ -58,3 +58,6 @@ const Modal = forwardRef<HTMLDivElement, ModalProps>(
 );
 
 export default Modal;
+
+
+Modal.displayName = 'MyModal';
