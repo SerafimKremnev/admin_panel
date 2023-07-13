@@ -18,6 +18,20 @@ const CardUserPreview = ({user, currentTimer}: CardUserPreviewProps) => {
   const start = new Date(currentTimer.start)
   const task = currentTimer.task
   const [openModal, setOpenModal] = useState(false)
+
+  function getTimeElapsed(end) {
+    if(end) {
+
+      const currentDate = new Date();
+      const timeDiff = currentDate - new Date(end);
+
+      // Преобразование разницы в миллисекундах в часы и минуты
+      const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
+
+      return hours + "ч " + minutes + "мин назад";
+    }
+  }
   return (
     task ? <>
       <Card variant={'outlined'} className={styles.card}>
@@ -30,6 +44,8 @@ const CardUserPreview = ({user, currentTimer}: CardUserPreviewProps) => {
           <TaskName currentTimeTrack={currentTimer.duration} status={task.status} name={task.name} href={task.url}/>
           <div className={styles.date}>
             <span>Начало - {format(start, 'dd MMMM HH:mm:ss', {locale: ru})}</span>
+            {currentTimer.end &&
+              <span>Конец - {format(new Date(currentTimer.end), 'dd MMMM HH:mm:ss', {locale: ru})} <small>({getTimeElapsed(currentTimer.end)})</small></span>}
             {task.timeEstimate && <span>Оценка - {convertToTime(task.timeEstimate)}</span>}
             <span>Ушло времени на задачу - {convertToTime(user.timeSpentOnTask)}</span>
           </div>
