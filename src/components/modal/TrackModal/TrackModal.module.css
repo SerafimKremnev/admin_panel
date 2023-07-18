@@ -1,7 +1,16 @@
 .timers {
     padding-top: 1rem;
     width: 100%;
-    gap: 1rem;
     display: grid;
     max-width: 60rem;
+}
+
+.timer {
+    margin-top: 2rem;
+    background: #efefef;
+    padding: 1rem;
+}
+
+.noMargin {
+    margin-top: 0;
 }
