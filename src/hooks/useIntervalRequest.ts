@@ -16,7 +16,7 @@ const useIntervalRequest = <T>(): T | null => {
     getData()
     const interval = setInterval(() => {
       getData()
-    }, 1000 * 5)
+    }, 1000 * 30)
     return () => clearInterval(interval)
   }, [])
 
