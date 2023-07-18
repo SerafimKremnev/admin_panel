@@ -14,9 +14,10 @@ const useIntervalRequest = <T>(): T | null => {
 
   useEffect(() => {
     getData()
-    setInterval(() => {
+    const interval = setInterval(() => {
       getData()
-    }, 1000 * 10)
+    }, 1000 * 5)
+    return () => clearInterval(interval)
   }, [])
 
   return data

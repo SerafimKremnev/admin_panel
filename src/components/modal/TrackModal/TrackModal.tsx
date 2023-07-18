@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {TimersToday} from "../../../types/timers.interface";
 import Modal from "../Modal/Modal";
 import styles from './TrackModal.module.css'
@@ -16,16 +16,20 @@ interface TrackModalProps {
   onClose: () => void
 }
 const TrackModal = ({timersToday, name, open, onClose}: TrackModalProps) => {
+  const [timers, setTimers] = useState<TimersToday[]>([])
+  useEffect(() => {
+    setTimers(timersToday.slice(1, timersToday.length))
+  }, [timersToday])
   return (
     <Modal isOpen={open} onRequestClose={onClose}>
       <Typography fontSize={'2rem'} fontWeight={600}>{name}</Typography>
       <div className={styles.timers}>
         {
-          timersToday.slice(1, timersToday.length).map((timer, i) => {
-              const isGroup = timer.task && i > 0 && timer.task.location.list.id !== timersToday.slice(1, timersToday.length)[i-1].task?.location.list.id
+          timers.map((timer, i) => {
+              const isGroup = timer.task && i > 0 && timer.task.location.list.id !== timers[i-1].task?.location.list.id
               return (timer.task &&
               <div
-                key={timer.task.id}
+                key={i}
                 className={cn(styles.timer, !isGroup && styles.noMargin)}
               >
                 {isGroup &&
