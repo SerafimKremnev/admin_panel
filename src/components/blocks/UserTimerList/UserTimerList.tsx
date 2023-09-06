@@ -50,7 +50,7 @@ const UserTimerList = ({ users }: UserTimerListProps) => {
             <CardUserPreview
               user={user}
               key={user.clickupUser.id}
-              currentTimer={user.timersToday[0]}
+              currentTimer={user.timersToday.at(-1)}
             />
           ))
         ) : (
