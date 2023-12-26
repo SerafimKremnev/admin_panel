@@ -16,22 +16,7 @@ const useInterval = (callback: () => void, delay: number) => {
 
 
 export default function Home() {
-  const [data, setData] = useState<IUser[] | null>(null);
-
-  const fetchData = async () => {
-    try {
-      const { data: timers } = await axiosClient.get<IUser[]>(API.getTimers);
-      setData(timers);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useInterval(fetchData, 10000);
+  const data = useIntervalRequest<IUser[]>()
 
   return (
     <>

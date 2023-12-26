@@ -32,12 +32,35 @@ const CardUserPreview = ({user, currentTimer}: CardUserPreviewProps) => {
       return hours + "ч " + minutes + "мин назад";
     }
   }
+
+  function timeToSeconds(time) {
+    const parts = time.split(':');
+    return parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
+  }
+  
+  // Функция для преобразования секунд в формат "hh:mm:ss"
+  function secondsToTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+  
+    return (
+      pad(hours) + ':' + pad(minutes) + ':' + pad(remainingSeconds)
+    );
+  }
+  
+  // Функция для добавления ведущего нуля к числам < 10
+  function pad(number) {
+    return (number < 10 ? '0' : '') + number;
+  }
+
+  
   return (
     task ? <>
       <Card variant={'outlined'} className={styles.card}>
         <div onClick={() => setOpenModal(true)} className={styles.user}>
           <Typography fontSize={16}>{user.clickupUser.username}</Typography>
-          <Typography fontSize={16}>{convertToTime(user.timeTrackedToday)}</Typography>
+          <Typography fontSize={16}>{secondsToTime(user.timersToday.map(t => timeToSeconds(convertToTime(t.duration))).reduce((acc, v) => acc + v))}</Typography>
         </div>
         <div className={styles.content}>
           <Location location={task.location}/>
